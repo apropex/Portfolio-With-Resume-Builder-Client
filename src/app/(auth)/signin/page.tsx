@@ -1,7 +1,7 @@
+import HomeButton from "@/components/buttons/HomeButton";
 import AuthPageBanner from "@/components/modules/Auth/AuthPageBanner";
 import SignInForm from "@/components/modules/Auth/SignInForm";
 import SocialLoginButtons from "@/components/modules/Auth/SocialLoginButtons";
-import HomeButton from "@/components/ui/HomeButton";
 import Link from "next/link";
 
 export default function SignInPage() {

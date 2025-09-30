@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { HomeIcon } from "lucide-react";
 import Link from "next/link";
-import { Button } from "./button";
+import { Button } from "../ui/button";
 
 interface iProps {
   className?: string;
