@@ -1,12 +1,11 @@
 import { cn } from "@/lib/utils";
+import { iButton } from "@/types";
 import { HomeIcon } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
 
-interface iProps {
+interface iProps extends iButton {
   className?: string;
-  variant?: "link" | "default" | "destructive" | "outline" | "secondary" | "ghost";
-  size?: "default" | "sm" | "lg" | "icon";
 }
 
 export default function HomeButton({

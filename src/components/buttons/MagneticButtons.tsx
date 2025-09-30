@@ -1,10 +1,8 @@
+import { iButton } from "@/types";
 import { Button } from "../ui/button";
 import { Magnetic } from "../ui/magnetic";
 
-interface iProps extends React.ComponentProps<"button"> {
-  variant?: "link" | "default" | "destructive" | "outline" | "secondary" | "ghost";
-  size?: "default" | "sm" | "lg" | "icon";
-}
+type iProps = React.ComponentProps<"button"> & iButton;
 
 export default function MagneticButton({
   children,
@@ -12,18 +10,28 @@ export default function MagneticButton({
   variant = "default",
   size = "default",
   type = "button",
+  asChild = false,
   ...props
 }: iProps) {
   return (
-    <Button type={type} {...props} className={className} variant={variant} size={size}>
-      <Magnetic
-        intensity={0.1}
-        springOptions={{ bounce: 0.2 }}
-        actionArea="global"
-        range={200}
+    <Magnetic
+      intensity={0.1}
+      springOptions={{ bounce: 0.2 }}
+      actionArea="global"
+      range={200}
+    >
+      <Button
+        asChild={asChild}
+        type={type}
+        className={className}
+        variant={variant}
+        size={size}
+        {...props}
       >
         {children}
-      </Magnetic>
-    </Button>
+      </Button>
+    </Magnetic>
   );
 }
+
+//

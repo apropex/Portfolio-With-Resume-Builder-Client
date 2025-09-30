@@ -1,5 +1,7 @@
 import Logo from "@/assets/logo";
 import { ModeToggle } from "@/components/ModeToggle";
+import { Button } from "@/components/ui/button";
+import { LogInIcon } from "lucide-react";
 import Link from "next/link";
 import MobileNav from "./MobileNav";
 import NavLinks from "./NavLinks";
@@ -37,8 +39,11 @@ export default function Navbar() {
         </div>
 
         {/* Right Side */}
-        <div>
+        <div className="flex items-center gap-x-3">
           <ModeToggle />
+          <Button variant="outline">
+            <LogInIcon /> Login
+          </Button>
         </div>
       </div>
     </header>
