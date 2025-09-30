@@ -1,8 +1,11 @@
+"use client";
+
 import {
   BoltIcon,
   BookOpenIcon,
   CircleUserRoundIcon,
   Layers2Icon,
+  LogInIcon,
   LogOutIcon,
   PinIcon,
   UserPenIcon,
@@ -18,67 +21,94 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function ProfileMenu() {
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button size="icon" variant="outline" aria-label="Open account menu">
-          <CircleUserRoundIcon size={16} aria-hidden="true" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="max-w-64 mt-4" align="end">
-        <DropdownMenuLabel className="flex items-center gap-3">
-          {/* <Image
-            src="https://i.ibb.co.com/kg7FwnkW/36560536665-2-1.png"
-            alt="Avatar"
-            width={32}
-            height={32}
-            className="shrink-0 rounded-full"
-          /> */}
-          <CircleUserRoundIcon size={28} aria-hidden="true" className="opacity-80" />
+  const { data: session, status } = useSession();
 
-          <div className="flex min-w-0 flex-col">
-            <span className="text-foreground truncate text-sm font-medium">
-              Keith Kennedy
-            </span>
-            <span className="text-muted-foreground truncate text-xs font-normal">
-              k.kennedy@originui.com
-            </span>
-          </div>
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <BoltIcon size={16} className="opacity-60" aria-hidden="true" />
-            <span>Option 1</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Layers2Icon size={16} className="opacity-60" aria-hidden="true" />
-            <span>Option 2</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <BookOpenIcon size={16} className="opacity-60" aria-hidden="true" />
-            <span>Option 3</span>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <PinIcon size={16} className="opacity-60" aria-hidden="true" />
-            <span>Option 4</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <UserPenIcon size={16} className="opacity-60" aria-hidden="true" />
-            <span>Option 5</span>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <LogOutIcon size={16} className="opacity-60" aria-hidden="true" />
-          <span>Logout</span>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+  if (status === "loading") return null;
+
+  const authenticated = status === "authenticated";
+  const user = session?.user;
+
+  return (
+    <>
+      {user && authenticated ? (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button size="icon" variant="outline" aria-label="Open account menu">
+              <CircleUserRoundIcon size={16} aria-hidden="true" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="max-w-64 mt-4" align="end">
+            <DropdownMenuLabel className="flex items-center gap-3">
+              {user && user.image ? (
+                <Image
+                  src={user.image}
+                  alt="Avatar"
+                  width={32}
+                  height={32}
+                  className="shrink-0 rounded-full"
+                />
+              ) : (
+                <CircleUserRoundIcon
+                  size={28}
+                  aria-hidden="true"
+                  className="opacity-80"
+                />
+              )}
+
+              <div className="flex min-w-0 flex-col">
+                <span className="text-foreground truncate text-sm font-medium">
+                  Keith Kennedy
+                </span>
+                <span className="text-muted-foreground truncate text-xs font-normal">
+                  k.kennedy@originui.com
+                </span>
+              </div>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                <BoltIcon size={16} className="opacity-60" aria-hidden="true" />
+                <span>Option 1</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Layers2Icon size={16} className="opacity-60" aria-hidden="true" />
+                <span>Option 2</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <BookOpenIcon size={16} className="opacity-60" aria-hidden="true" />
+                <span>Option 3</span>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                <PinIcon size={16} className="opacity-60" aria-hidden="true" />
+                <span>Option 4</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <UserPenIcon size={16} className="opacity-60" aria-hidden="true" />
+                <span>Option 5</span>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem variant="destructive">
+              <LogOutIcon size={16} className="opacity-60" aria-hidden="true" />
+              <span>Logout</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ) : (
+        <Button variant="outline" asChild>
+          <Link href={"/signin"}>
+            <LogInIcon /> Login
+          </Link>
+        </Button>
+      )}
+    </>
   );
 }

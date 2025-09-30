@@ -1,7 +1,5 @@
 import Logo from "@/assets/logo";
 import { ModeToggle } from "@/components/ModeToggle";
-import { Button } from "@/components/ui/button";
-import { LogInIcon } from "lucide-react";
 import Link from "next/link";
 import MobileNav from "./MobileNav";
 import NavLinks from "./NavLinks";
@@ -34,20 +32,15 @@ export default function Navbar() {
         </div>
 
         {/* Middle */}
-        <div className="max-md:hidden border border-green-500/20 bg-green-500/5 py-1.5 px-2 rounded-4xl shadow-[2px_5px_8px_rgba(0,0,0,0.2)] dark:shadow-[2px_4px_9px_rgba(0,255,0,0.13)]">
-          {/* Navigation menu */}
-          <NavLinks />
+        <div className="max-md:hidden border border-green-500/20 bg-background overflow-hidden rounded-4xl shadow-[2px_5px_8px_rgba(0,0,0,0.2)] dark:shadow-[2px_4px_9px_rgba(0,255,0,0.13)]">
+          <div className="w-full h-full bg-green-500/5 py-1.5 px-2">
+            <NavLinks />
+          </div>
         </div>
 
         {/* Right Side */}
         <div className="flex items-center gap-x-3">
           <ModeToggle />
-          <Button variant="outline" asChild>
-            <Link href={"/signin"}>
-              <LogInIcon /> Login
-            </Link>
-          </Button>
-
           <ProfileMenu />
         </div>
       </div>

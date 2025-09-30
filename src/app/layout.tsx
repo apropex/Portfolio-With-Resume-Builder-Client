@@ -1,3 +1,4 @@
+import AuthProvider from "@/provider/AuthProvider";
 import { ThemeProvider } from "@/provider/theme-provider";
 import { iChildren } from "@/types";
 import type { Metadata } from "next";
@@ -24,16 +25,18 @@ export default function RootLayout({ children }: Readonly<iChildren>) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <main className="container mx-auto">
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
-        </main>
+        <AuthProvider>
+          <main>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+            </ThemeProvider>
+          </main>
+        </AuthProvider>
       </body>
     </html>
   );
