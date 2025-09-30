@@ -5,6 +5,7 @@ import { LogInIcon } from "lucide-react";
 import Link from "next/link";
 import MobileNav from "./MobileNav";
 import NavLinks from "./NavLinks";
+import ProfileMenu from "./ProfileMenu";
 
 // Navigation links array to be used in both desktop and mobile menus
 export const navigationLinks = [
@@ -41,9 +42,13 @@ export default function Navbar() {
         {/* Right Side */}
         <div className="flex items-center gap-x-3">
           <ModeToggle />
-          <Button variant="outline">
-            <LogInIcon /> Login
+          <Button variant="outline" asChild>
+            <Link href={"/signin"}>
+              <LogInIcon /> Login
+            </Link>
           </Button>
+
+          <ProfileMenu />
         </div>
       </div>
     </header>
