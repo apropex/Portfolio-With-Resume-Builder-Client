@@ -43,7 +43,7 @@ export default function NavLinks() {
               {
                 "focus:bg-accent hover:bg-accent border border-green-500/10 bg-accent text-accent-foreground":
                   pathName === link.href,
-              }
+              },
             )}
           >
             {link.label}

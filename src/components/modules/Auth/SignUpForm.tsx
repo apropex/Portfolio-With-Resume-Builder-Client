@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import AvatarUpload from "@/components/avatar-upload";
+import { fileUploader } from "@/components/ImagekitUpload";
 import {
   Form,
   FormControl,
@@ -18,6 +19,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import LoadingSpinner from "@/components/ui/loadingSpinner";
+import { deleteFile } from "@/helpers/deleteFile";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { useState } from "react";
 
@@ -62,11 +64,23 @@ export default function SignUpForm() {
   });
 
   // Define submit handler.
-  function onSubmit(values: FormValues) {
+  async function onSubmit(values: FormValues) {
     setLoading(true);
-    console.log({ values });
-    console.log({ file });
-    setLoading(false);
+
+    let imageData;
+    if (file) imageData = await fileUploader(file);
+
+    const data = { ...values, image: imageData?.url || null };
+
+    try {
+      const result = await deleteFile("");
+
+      console.log({ imagekitResult: result });
+    } catch (error) {
+      console.log({ error });
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
