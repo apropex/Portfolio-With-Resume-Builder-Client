@@ -9,7 +9,7 @@ interface iProps extends iChildren {
 export default function Background({ children, className }: iProps) {
   return (
     <section className={cn("relative w-full h-auto overflow-hidden", className)}>
-      <Particles quantity={200} vy={-0.2} staticity={25} />
+      <Particles quantity={400} vy={-0.05} staticity={35} />
       {children}
     </section>
   );

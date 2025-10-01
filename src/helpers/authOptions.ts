@@ -44,7 +44,8 @@ export const authOptions: NextAuthOptions = {
               id: user.id,
               email: user.email,
               name: user.name,
-              image: user.picture,
+              image: user.image,
+              role: user.role,
             };
           } else return null;
 
@@ -96,7 +97,8 @@ export const authOptions: NextAuthOptions = {
             email: user.email || profile?.email || "",
             role: "USER",
             image: user.image || profile?.picture || profile?.avatar_url,
-            provider: [{ name: account.provider, id: account.providerAccountId }],
+            provider: account.provider,
+            providerId: account.providerAccountId,
             isVerified: true,
           });
 

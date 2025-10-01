@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { register } from "@/actions/auth";
 import AvatarUpload from "@/components/avatar-upload";
 import { fileUploader } from "@/components/ImagekitUpload";
 import {
@@ -21,6 +22,7 @@ import { Input } from "@/components/ui/input";
 import LoadingSpinner from "@/components/ui/loadingSpinner";
 import { deleteFile } from "@/helpers/deleteFile";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const formSchema = z.object({
@@ -52,6 +54,7 @@ export default function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState<File | null>(null);
+  const router = useRouter();
 
   // Define form.
   const form = useForm<FormValues>({
@@ -64,20 +67,43 @@ export default function SignUpForm() {
   });
 
   // Define submit handler.
-  async function onSubmit(values: FormValues) {
+  async function onSubmit({ fullName, email, password }: FormValues) {
     setLoading(true);
 
     let imageData;
     if (file) imageData = await fileUploader(file);
 
-    const data = { ...values, image: imageData?.url || null };
+    const data: {
+      name: string;
+      email: string;
+      password: string;
+      provider: "credentials";
+      image?: string;
+    } = {
+      name: fullName,
+      email,
+      password,
+      provider: "credentials",
+    };
+
+    if (imageData?.url) data.image = imageData?.url;
 
     try {
-      const result = await deleteFile("");
+      const newUser = await register(data);
 
-      console.log({ imagekitResult: result });
+      if ((!newUser || !newUser.email || !newUser.isNew) && imageData?.fileId) {
+        await deleteFile(imageData?.fileId);
+      }
+
+      if (newUser && newUser.provider === "credentials") {
+        router.push("/signin");
+      } else if (newUser && newUser.email) router.push("/");
+
+      console.log({ imageData });
+      console.log({ newUser });
     } catch (error) {
       console.log({ error });
+      if (imageData?.fileId) await deleteFile(imageData?.fileId);
     } finally {
       setLoading(false);
     }

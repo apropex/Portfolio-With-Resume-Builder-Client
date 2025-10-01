@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import {
@@ -12,11 +13,12 @@ import { useFileUpload } from "@/hooks/use-file-upload";
 import { cn } from "@/lib/utils";
 import { TriangleAlert, User, X } from "lucide-react";
 import Image from "next/image";
+import { useEffect } from "react";
 
 interface AvatarUploadProps {
   maxSize?: number;
   className?: string;
-  setFile?: React.Dispatch<React.SetStateAction<File | null>>;
+  setFile: React.Dispatch<React.SetStateAction<File | null>>;
   defaultAvatar?: string;
 }
 
@@ -42,9 +44,6 @@ export default function AvatarUpload({
     maxSize,
     accept: "image/*",
     multiple: false,
-    onFilesChange: (files) => {
-      setFile?.((files[0]?.file as File) || null);
-    },
   });
 
   const currentFile = files[0];
@@ -56,6 +55,10 @@ export default function AvatarUpload({
     }
   };
 
+  useEffect(() => {
+    setFile((currentFile?.file as File) || null);
+  }, [currentFile, files]);
+
   return (
     <div className={cn("flex flex-col items-center gap-4", className)}>
       {/* Avatar Preview */}
@@ -66,7 +69,7 @@ export default function AvatarUpload({
             isDragging
               ? "border-primary bg-primary/5"
               : "border-muted-foreground/25 hover:border-muted-foreground/20",
-            previewUrl && "border-solid",
+            previewUrl && "border-solid"
           )}
           onDragEnter={handleDragEnter}
           onDragLeave={handleDragLeave}

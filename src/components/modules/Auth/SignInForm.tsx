@@ -18,6 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import LoadingSpinner from "@/components/ui/loadingSpinner";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+import { signIn } from "next-auth/react";
 import { useState } from "react";
 
 const formSchema = z.object({
@@ -52,7 +53,14 @@ export default function SignInForm() {
 
   // Define submit handler.
   function onSubmit(values: FormValues) {
-    console.log(values);
+    try {
+      signIn("credentials", {
+        ...values,
+        callbackUrl: "/",
+      });
+    } catch (error) {
+      console.error("Login error: ", error);
+    }
   }
 
   return (
