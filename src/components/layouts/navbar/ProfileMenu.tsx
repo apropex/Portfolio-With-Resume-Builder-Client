@@ -1,16 +1,6 @@
 "use client";
 
-import {
-  BoltIcon,
-  BookOpenIcon,
-  CircleUserRoundIcon,
-  Layers2Icon,
-  LogInIcon,
-  LogOutIcon,
-  PinIcon,
-  UserPenIcon,
-} from "lucide-react";
-
+import AlertDialog from "@/components/alertDialog";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -21,17 +11,32 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useSession } from "next-auth/react";
+import {
+  BoltIcon,
+  BookOpenIcon,
+  CircleUserRoundIcon,
+  Layers2Icon,
+  LogInIcon,
+  LogOutIcon,
+  PinIcon,
+  UserPenIcon,
+} from "lucide-react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function ProfileMenu() {
   const { data: session, status } = useSession();
-
+  const [open, setOpen] = useState(false);
   if (status === "loading") return null;
 
   const authenticated = status === "authenticated";
   const user = session?.user;
+
+  const signout = async () => {
+    await signOut({ callbackUrl: "/signin" });
+  };
 
   return (
     <>
@@ -96,7 +101,7 @@ export default function ProfileMenu() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem variant="destructive">
+            <DropdownMenuItem variant="destructive" onClick={() => setOpen(true)}>
               <LogOutIcon size={16} className="opacity-60" aria-hidden="true" />
               <span>Logout</span>
             </DropdownMenuItem>
@@ -109,6 +114,15 @@ export default function ProfileMenu() {
           </Link>
         </Button>
       )}
+
+      <AlertDialog
+        type="error"
+        isOpen={open}
+        setOpen={setOpen}
+        onClick={signout}
+        title="Are you sure ot sign out?"
+        description="Your are going to signout permanently!"
+      />
     </>
   );
 }

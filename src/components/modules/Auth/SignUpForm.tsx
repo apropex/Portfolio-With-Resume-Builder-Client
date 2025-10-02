@@ -20,10 +20,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import LoadingSpinner from "@/components/ui/loadingSpinner";
+import { iNotification, Notifications } from "@/components/ui/notifications";
 import { deleteFile } from "@/helpers/deleteFile";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const formSchema = z.object({
   fullName: z
@@ -55,6 +56,7 @@ export default function SignUpForm() {
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const router = useRouter();
+  const toastRef = useRef<iNotification>(null);
 
   // Define form.
   const form = useForm<FormValues>({
@@ -95,15 +97,28 @@ export default function SignUpForm() {
         await deleteFile(imageData?.fileId);
       }
 
-      if (newUser && newUser.provider === "credentials") {
-        router.push("/signin");
-      } else if (newUser && newUser.email) router.push("/");
-
-      console.log({ imageData });
-      console.log({ newUser });
+      if (newUser && newUser.email) {
+        toastRef.current?.createNotification(
+          "success",
+          `Successfully register ${newUser.name}`,
+          "Would you like an adventure now, or would you like to have your tea first?"
+        );
+        if (newUser.provider === "credentials") router.push("/signin");
+        else router.push("/");
+      } else
+        toastRef.current?.createNotification(
+          "error",
+          "Failed to register user",
+          "We are sorry for unnecaccery problem, try again later or contact to admin"
+        );
     } catch (error) {
       console.log({ error });
       if (imageData?.fileId) await deleteFile(imageData?.fileId);
+      toastRef.current?.createNotification(
+        "error",
+        `Failed to register user`,
+        "We are sorry for unnecaccery problem, try again later or contact to admin"
+      );
     } finally {
       setLoading(false);
     }
@@ -216,6 +231,11 @@ export default function SignUpForm() {
           </button>
         </form>
       </Form>
+      <Notifications
+        ref={toastRef}
+        timerColor="rgba(255,255,255,0.8)"
+        timerBgColor="rgba(255,255,255,0.3)"
+      />
     </>
   );
 }

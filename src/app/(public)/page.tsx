@@ -1,5 +1,4 @@
 import MagneticButton from "@/components/buttons/MagneticButtons";
-import ContentCard from "@/components/content-card";
 import { User } from "lucide-react";
 
 export default function Home() {
@@ -13,7 +12,6 @@ export default function Home() {
           Abdullah
         </span>
       </h1>
-
       <div className="relative h-40 w-full">
         <MagneticButton>
           <span className="inline-flex gap-x-2">
@@ -21,16 +19,6 @@ export default function Home() {
           </span>
         </MagneticButton>
       </div>
-
-      <ContentCard
-        backgroundImage="https://i.ibb.co.com/KpW9NBYH/53.jpg"
-        content={{
-          title: "Author Card",
-          description:
-            "Card with Author avatar, complete name and time to read - most suitable for blogs.",
-          link: "/",
-        }}
-      />
     </div>
   );
 }
