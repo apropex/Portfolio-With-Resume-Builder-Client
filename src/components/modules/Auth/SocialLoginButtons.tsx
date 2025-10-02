@@ -1,7 +1,14 @@
 import { Github } from "lucide-react";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 
 export default function SocialLoginButtons() {
+  const handleSocialLogin = async (provider: "google" | "github") => {
+    await signIn(provider, {
+      callbackUrl: "/",
+    });
+  };
+
   return (
     <div className="mt-8">
       <div className="relative text-center text-sm text-stone-500 mb-4">
@@ -15,6 +22,7 @@ export default function SocialLoginButtons() {
         <button
           type="button"
           className="border-border bg-secondary/20 text-foreground hover:bg-secondary/40 flex items-center justify-center rounded-lg border px-4 py-2.5 text-sm shadow-sm"
+          onClick={() => handleSocialLogin("google")}
         >
           <Image
             src="https://www.svgrepo.com/show/475656/google-color.svg"
@@ -27,6 +35,7 @@ export default function SocialLoginButtons() {
         <button
           type="button"
           className="border-border bg-secondary/20 text-foreground hover:bg-secondary/40 flex items-center justify-center rounded-lg border px-4 py-2.5 text-sm shadow-sm"
+          onClick={() => handleSocialLogin("github")}
         >
           <Github className="h-5 w-5" />
           <span className="ml-2">GitHub</span>

@@ -52,9 +52,9 @@ export default function SignInForm() {
   });
 
   // Define submit handler.
-  function onSubmit(values: FormValues) {
+  async function onSubmit(values: FormValues) {
     try {
-      signIn("credentials", {
+      await signIn("credentials", {
         ...values,
         callbackUrl: "/",
       });

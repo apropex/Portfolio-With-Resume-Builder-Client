@@ -34,7 +34,7 @@ export default function ProfileMenu() {
   const authenticated = status === "authenticated";
   const user = session?.user;
 
-  const signout = async () => {
+  const handleSignout = async () => {
     await signOut({ callbackUrl: "/signin" });
   };
 
@@ -119,7 +119,7 @@ export default function ProfileMenu() {
         type="error"
         isOpen={open}
         setOpen={setOpen}
-        onClick={signout}
+        onClick={handleSignout}
         title="Are you sure ot sign out?"
         description="Your are going to signout permanently!"
       />
