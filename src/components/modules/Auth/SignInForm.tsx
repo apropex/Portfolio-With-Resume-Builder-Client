@@ -53,6 +53,7 @@ export default function SignInForm() {
 
   // Define submit handler.
   async function onSubmit(values: FormValues) {
+    setLoading(true);
     try {
       await signIn("credentials", {
         ...values,
@@ -60,6 +61,8 @@ export default function SignInForm() {
       });
     } catch (error) {
       console.error("Login error: ", error);
+    } finally {
+      setLoading(false);
     }
   }
 

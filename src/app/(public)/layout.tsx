@@ -1,13 +1,14 @@
 import Footer from "@/components/layouts/footer/Footer";
 import Navbar from "@/components/layouts/navbar/Navbar";
-import Background from "@/components/modules/Home/Background";
+import Background from "@/components/ui/background";
+
 import { iChildren } from "@/types";
 
 export default function PublicLayout({ children }: Readonly<iChildren>) {
   return (
     <Background className="min-h-screen">
       <div className="flex flex-col min-h-screen">
-        <div className="container mx-auto flex-1">
+        <div className="container mx-auto flex-1 p-container">
           <Navbar />
           {children}
         </div>

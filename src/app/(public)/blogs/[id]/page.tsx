@@ -2,10 +2,22 @@ import { iParams } from "@/types";
 import { iBlog } from "@/types/blog";
 import { _fetch } from "@/utils/_fetch";
 import apiLink from "@/utils/apiLink";
+import { joinString } from "@/utils/joinString";
 import { format } from "date-fns";
+import { Metadata } from "next";
 import Image from "next/image";
 
-//
+export async function generateMetadata({ params }: iParams) {
+  const id = (await params).id;
+  const blog = await _fetch<iBlog>(apiLink("/blog/", id));
+
+  return {
+    title: joinString(blog?.title ?? "Blog detail page", " | Portfolio Pro"),
+    description: blog?.content || "",
+  } as Metadata;
+}
+
+// === \\ === // === \\
 
 export default async function BlogDetails({ params }: iParams) {
   const id = (await params).id;
@@ -14,7 +26,7 @@ export default async function BlogDetails({ params }: iParams) {
   if (!blog) return null;
 
   return (
-    <section className="py-16 md:py-32">
+    <section className="py-16 md:py-24">
       <div className="mx-auto max-w-5xl space-y-8 px-6 md:space-y-12">
         <div className="flex justify-center">
           <span className="inline-block text-sm bg-secondary/40 p-1.5 px-5 rounded">

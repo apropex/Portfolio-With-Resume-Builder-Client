@@ -6,22 +6,10 @@ import { iBlogResponse } from "@/types/blog";
 import { _fetch } from "@/utils/_fetch";
 import apiLink from "@/utils/apiLink";
 
-/*
-  className?: string;
-  backgroundImage?: string;
-  content: {
-    title: string;
-    description: string;
-    link?: string;
-  };
-*/
-
 export default async function BlogsPage() {
   const { data: blogs, pagination } = await _fetch<iBlogResponse>(apiLink("/blog"), {
     cache: "no-store",
   });
-
-  console.log(blogs);
 
   return (
     <div className="">
@@ -30,7 +18,7 @@ export default async function BlogsPage() {
       <div
         className={cn(
           "grid grid-cols-1 md:grid-cols-3 gap-4",
-          "w-full max-w-4xl mx-auto mt-12",
+          "w-full max-w-4xl mx-auto mt-12"
         )}
       >
         {blogs?.map(({ id, images, title, content }) => (

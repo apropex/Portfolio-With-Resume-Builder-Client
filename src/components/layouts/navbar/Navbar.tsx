@@ -15,9 +15,9 @@ export const navigationLinks = [
   { href: "/dashboard", label: "Dashboard" },
 ];
 
-export default function Navbar() {
+export default function Navbar({ className }: { className?: string }) {
   return (
-    <header className="p-container">
+    <header className={className}>
       <div className="flex h-16 items-center justify-between gap-4">
         {/* Left side */}
         <div className="flex items-center gap-2">
