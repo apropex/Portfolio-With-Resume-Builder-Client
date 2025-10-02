@@ -3,7 +3,7 @@
 export async function _fetch<TResponse = unknown, TRequest = unknown>(
   api: string,
   options: RequestInit = {},
-  body?: TRequest
+  body?: TRequest,
 ): Promise<TResponse> {
   if (!options.method) options.method = "GET";
   if (!options.headers) {

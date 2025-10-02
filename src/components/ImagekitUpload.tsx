@@ -45,16 +45,15 @@ export const fileUploader = async (file: File): Promise<iImageKitResponse> => {
     throw new Error(
       `File size exceeds the limit of ${
         isImage ? IMAGE_MAX_SIZE_MB : VIDEO_MAX_SIZE_MB
-      }MB.`
+      }MB.`,
     );
   }
 
   const abortController = new AbortController();
 
   try {
-    const { signature, expire, token, publicKey } = await _fetch<iImageKitAuthParams>(
-      "/api/auth/image-kit"
-    );
+    const { signature, expire, token, publicKey } =
+      await _fetch<iImageKitAuthParams>("/api/auth/image-kit");
 
     return (await upload({
       file,

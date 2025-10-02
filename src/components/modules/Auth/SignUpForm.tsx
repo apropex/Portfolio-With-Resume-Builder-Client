@@ -101,7 +101,7 @@ export default function SignUpForm() {
         toastRef.current?.createNotification(
           "success",
           `Successfully register ${newUser.name}`,
-          "Would you like an adventure now, or would you like to have your tea first?"
+          "Would you like an adventure now, or would you like to have your tea first?",
         );
         if (newUser.provider === "credentials") router.push("/signin");
         else router.push("/");
@@ -109,7 +109,7 @@ export default function SignUpForm() {
         toastRef.current?.createNotification(
           "error",
           "Failed to register user",
-          "We are sorry for unnecaccery problem, try again later or contact to admin"
+          "We are sorry for unnecaccery problem, try again later or contact to admin",
         );
     } catch (error) {
       console.log({ error });
@@ -117,7 +117,7 @@ export default function SignUpForm() {
       toastRef.current?.createNotification(
         "error",
         `Failed to register user`,
-        "We are sorry for unnecaccery problem, try again later or contact to admin"
+        "We are sorry for unnecaccery problem, try again later or contact to admin",
       );
     } finally {
       setLoading(false);

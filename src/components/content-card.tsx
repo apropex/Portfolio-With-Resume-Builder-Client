@@ -22,7 +22,7 @@ export default function ContentCard({
   link,
 }: AuthorCardProps) {
   return (
-    <div className="w-full max-w-sm group rounded-md overflow-hidden shadow-xl">
+    <div className="w-full max-w-sm group rounded-md overflow-hidden shadow-[6px_8px_10px_rgba(0,0,0,0.8)] dark:shadow-[6px_8px_10px_rgba(0,0,0,0.9)]">
       <div
         className={cn("h-96 w-full relative bg-cover bg-center", className)}
         style={{ backgroundImage: `url(${backgroundImage ? backgroundImage : ""})` }}
@@ -30,7 +30,7 @@ export default function ContentCard({
         <div
           className={cn(
             "w-full h-full p-4 transition duration-300  flex items-end",
-            "group-hover:bg-black/50 group-hover:backdrop-blur-xs"
+            "group-hover:bg-black/50 group-hover:backdrop-blur-xs",
           )}
         >
           <div className="text content relative z-10">

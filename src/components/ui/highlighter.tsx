@@ -486,7 +486,7 @@ export const Particles: React.FC<ParticlesProps> = ({
     start1: number,
     end1: number,
     start2: number,
-    end2: number
+    end2: number,
   ): number => {
     const remapped = ((value - start1) * (end2 - start2)) / (end1 - start1) + start2;
     return remapped > 0 ? remapped : 0;
@@ -503,7 +503,7 @@ export const Particles: React.FC<ParticlesProps> = ({
       ];
       const closestEdge = edge.reduce((a, b) => Math.min(a, b));
       const remapClosestEdge = parseFloat(
-        remapValue(closestEdge, 0, 20, 0, 1).toFixed(2)
+        remapValue(closestEdge, 0, 20, 0, 1).toFixed(2),
       );
       if (remapClosestEdge > 1) {
         circle.alpha += 0.02;
@@ -538,7 +538,7 @@ export const Particles: React.FC<ParticlesProps> = ({
             translateY: circle.translateY,
             alpha: circle.alpha,
           },
-          true
+          true,
         );
       }
     });
@@ -551,7 +551,7 @@ export const Particles: React.FC<ParticlesProps> = ({
     <div
       className={cn(
         "w-full h-full absolute inset-0 -z-10 opacity-50 transition-opacity duration-1000 ease-in-out hover:opacity-70",
-        className
+        className,
       )}
       ref={canvasContainerRef}
       aria-hidden="true"

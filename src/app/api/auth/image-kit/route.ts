@@ -23,12 +23,12 @@ export async function GET() {
         signature,
         publicKey,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch {
     return NextResponse.json(
       { message: "Imagekit authentication failed" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       { data: result, message: "File deleted successfully" },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.log("File deleting error, imageKit: ", error);

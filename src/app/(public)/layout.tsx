@@ -6,11 +6,13 @@ import { iChildren } from "@/types";
 export default function PublicLayout({ children }: Readonly<iChildren>) {
   return (
     <Background className="min-h-screen">
-      <div className="container mx-auto">
-        <Navbar />
-        {children}
+      <div className="flex flex-col min-h-screen">
+        <div className="container mx-auto flex-1">
+          <Navbar />
+          {children}
+        </div>
+        <Footer />
       </div>
-      <Footer />
     </Background>
   );
 }

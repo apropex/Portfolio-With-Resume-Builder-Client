@@ -79,7 +79,7 @@ export const Notifications = forwardRef<iNotification, SplashedPushNotifications
       timerLeft: HTMLElement,
       timerRight: HTMLElement,
       duration: number,
-      uniqueId: number
+      uniqueId: number,
     ) => {
       const stylesheet = document.createElement("style");
       stylesheet.type = "text/css";
@@ -104,7 +104,7 @@ export const Notifications = forwardRef<iNotification, SplashedPushNotifications
     const createNotification = (
       type: NotificationType,
       notificationTitle: string,
-      notificationContent: string
+      notificationContent: string,
     ) => {
       if (notificationContainerRef.current) {
         const notif = document.createElement("div");
@@ -175,7 +175,7 @@ export const Notifications = forwardRef<iNotification, SplashedPushNotifications
             setTimerAnimation(timerLeft, timerRight, duration, uniqueId);
             timeoutId = setTimeout(
               () => removeNotification(notif),
-              duration - remainingTime
+              duration - remainingTime,
             );
             (timerLeft as HTMLElement).style.animationPlayState = "running";
             (timerRight as HTMLElement).style.animationPlayState = "running";
@@ -187,7 +187,7 @@ export const Notifications = forwardRef<iNotification, SplashedPushNotifications
     const createRtlNotification = (
       type: NotificationType,
       notificationTitle: string,
-      notificationContent: string
+      notificationContent: string,
     ) => {
       if (rtlNotificationContainerRef.current) {
         const notif = document.createElement("div");
@@ -264,7 +264,7 @@ export const Notifications = forwardRef<iNotification, SplashedPushNotifications
             setTimerAnimation(timerLeft, timerRight, duration, uniqueId);
             timeoutId = setTimeout(
               () => removeNotification(notif),
-              duration - remainingTime
+              duration - remainingTime,
             );
             (timerLeft as HTMLElement).style.animationPlayState = "running";
             (timerRight as HTMLElement).style.animationPlayState = "running";
@@ -287,7 +287,7 @@ export const Notifications = forwardRef<iNotification, SplashedPushNotifications
         ></div>
       </>
     );
-  }
+  },
 );
 
 Notifications.displayName = "SplashedPushNotifications";
