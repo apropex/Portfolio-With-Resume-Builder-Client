@@ -1,3 +1,4 @@
+import Footer from "@/components/layouts/footer/Footer";
 import Navbar from "@/components/layouts/navbar/Navbar";
 import Background from "@/components/modules/Home/Background";
 import { iChildren } from "@/types";
@@ -9,6 +10,7 @@ export default function PublicLayout({ children }: Readonly<iChildren>) {
         <Navbar />
         {children}
       </div>
+      <Footer />
     </Background>
   );
 }
