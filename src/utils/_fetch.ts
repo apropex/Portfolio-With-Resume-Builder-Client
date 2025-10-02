@@ -2,18 +2,16 @@
 
 export async function _fetch<TResponse = unknown, TRequest = unknown>(
   api: string,
-  method?: "POST" | "PATCH" | "GET" | "DELETE" | "HEAD",
+  options: RequestInit = {},
   body?: TRequest
 ): Promise<TResponse> {
-  const options: RequestInit = {
-    method,
-    headers: {
+  if (!options.method) options.method = "GET";
+  if (!options.headers) {
+    options.headers = {
       "Content-Type": "application/json",
-    },
-  };
-
-  // Only include body if method allows it
-  if (method !== "GET" && method !== "HEAD" && body !== undefined) {
+    };
+  }
+  if (options.method !== "GET" && options.method !== "HEAD" && !body) {
     options.body = JSON.stringify(body);
   }
 
