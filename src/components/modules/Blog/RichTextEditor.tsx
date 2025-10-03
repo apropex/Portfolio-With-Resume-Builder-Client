@@ -13,7 +13,7 @@ import {
   EditorFormatSubscript,
   EditorFormatSuperscript,
   EditorFormatUnderline,
-  EditorLinkSelector,
+  // EditorLinkSelector,
   EditorNodeBulletList,
   EditorNodeCode,
   EditorNodeHeading1,
@@ -96,7 +96,7 @@ export default function RichTextEditor({
           <EditorFormatSuperscript />
           <EditorFormatSubscript />
         </EditorSelector>
-        <EditorLinkSelector />
+        {/* <EditorLinkSelector /> */}
         <EditorClearFormatting />
       </EditorBubbleMenu>
       <EditorTableMenu>

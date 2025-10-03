@@ -62,7 +62,6 @@ import {
   ColumnsIcon,
   EllipsisIcon,
   EllipsisVerticalIcon,
-  ExternalLinkIcon,
   Heading1Icon,
   Heading2Icon,
   Heading3Icon,
@@ -84,8 +83,8 @@ import {
   TrashIcon,
   UnderlineIcon,
 } from "lucide-react";
-import type { FormEventHandler, HTMLAttributes, ReactNode } from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import type { HTMLAttributes, ReactNode } from "react";
+import { useCallback, useEffect, useState } from "react";
 import tippy, { type Instance as TippyInstance } from "tippy.js";
 
 interface SlashNodeAttrs {
@@ -645,7 +644,7 @@ export const EditorProvider = ({
     TableHeader.configure({
       HTMLAttributes: {
         class: cn(
-          "relative box-border min-w-[1em] border bg-secondary p-1 text-start align-top font-medium font-semibold text-muted-foreground"
+          "relative box-border min-w-[1em] border bg-primary/5 dark:bg-primary/10 p-1 text-start align-top font-medium font-semibold text-foreground"
         ),
       },
     }),
@@ -1218,6 +1217,7 @@ export type EditorLinkSelectorProps = {
   onOpenChange?: (open: boolean) => void;
 };
 
+/*
 export const EditorLinkSelector = ({ open, onOpenChange }: EditorLinkSelectorProps) => {
   const [url, setUrl] = useState<string>("");
   const inputReference = useRef<HTMLInputElement>(null);
@@ -1317,6 +1317,7 @@ export const EditorLinkSelector = ({ open, onOpenChange }: EditorLinkSelectorPro
     </Popover>
   );
 };
+*/
 
 export type EditorTableMenuProps = {
   children: ReactNode;
