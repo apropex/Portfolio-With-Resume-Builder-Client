@@ -31,7 +31,7 @@ const sections = [
     leftLabel: "Deploy",
     title: <>Ship It!</>,
     rightLabel: "Repeat",
-    background: "/hero/8.jpg",
+    background: "/hero/9.jpeg",
   },
 ];
 
