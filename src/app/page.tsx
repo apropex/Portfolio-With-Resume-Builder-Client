@@ -4,6 +4,8 @@ import Hero from "@/components/modules/Home/hero/hero";
 import Skills from "@/components/modules/Home/skills/skills";
 import ClickSpark from "@/components/ui/ClickSpark";
 
+//
+
 export default function Home() {
   return (
     <ClickSpark

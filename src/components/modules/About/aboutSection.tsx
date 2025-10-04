@@ -300,7 +300,7 @@ export default function AboutUsSection() {
 
               {/* Additional decorative elements */}
               <motion.div
-                className="absolute -top-10 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-[#88734C]"
+                className="absolute -top-10 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-[#f7a205]"
                 animate={{
                   y: [0, -10, 0],
                   opacity: [0.5, 1, 0.5],
