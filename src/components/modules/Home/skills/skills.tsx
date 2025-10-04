@@ -5,52 +5,9 @@ import { FlipReveal, FlipRevealItem } from "@/components/flip-reveal";
 import ParallaxBackground from "@/components/parallaxBackground";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-
-const content = {
-  toggleGroupItem: [
-    {
-      title: "All",
-      value: "all",
-    },
-    {
-      title: "Frontend",
-      value: "frontend",
-    },
-    {
-      title: "Backend",
-      value: "backend",
-    },
-    {
-      title: "Database",
-      value: "database",
-    },
-    {
-      title: "Cloud & Service",
-      value: "cloud&service",
-    },
-    {
-      title: "Version Control",
-      value: "version_control",
-    },
-    {
-      title: "Design & Prototyping",
-      value: "design_prototyping",
-    },
-    {
-      title: "Productivity Tools",
-      value: "productivity_tools",
-    },
-  ],
-  flipRevealItem: [
-    {
-      flipKey: "shirt",
-      src: "/hero/2.jpg",
-      alt: "Shirt",
-    },
-  ],
-};
+import { SkillCard } from "./skillCard";
+import { skillItems } from "./skillItems";
 
 export default function Skills() {
   const [key, setKey] = useState("all");
@@ -62,14 +19,15 @@ export default function Skills() {
     if (contentRef.current) {
       setScrollContentWidth(contentRef.current.scrollWidth);
     }
-  }, [content.toggleGroupItem]);
+  }, [skillItems.toggleGroupItem]);
 
   return (
     <ParallaxBackground
       bgUrl="/hero/9.jpeg"
+      yPercent={50}
       className={cn(
         "px-4 py-8 md:px-8 lg:px-14 lg:py-32",
-        "min-h-[300px] lg:min-h-[500px]"
+        "min-h-[300px] lg:min-h-[1000px]"
       )}
     >
       <div className="">
@@ -91,7 +49,7 @@ export default function Skills() {
               value={key}
               onValueChange={(e) => setKey(e)}
             >
-              {content.toggleGroupItem.map(({ title, value }) => (
+              {skillItems.toggleGroupItem.map(({ title, value }) => (
                 <ToggleGroupItem
                   key={value}
                   value={value}
@@ -127,15 +85,9 @@ export default function Skills() {
           showClass="flex"
           hideClass="hidden"
         >
-          {content.flipRevealItem.map((items, i) => (
-            <FlipRevealItem key={i} flipKey={items.flipKey}>
-              <Image
-                src={items.src}
-                alt={items.alt}
-                width={128}
-                height={128}
-                className="size-20 rounded-md sm:size-24 xl:size-32"
-              />
+          {skillItems.flipRevealItem.map((item, i) => (
+            <FlipRevealItem key={i} flipKey={item.flipKey}>
+              <SkillCard item={item} />
             </FlipRevealItem>
           ))}
         </FlipReveal>

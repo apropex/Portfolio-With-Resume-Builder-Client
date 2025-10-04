@@ -11,12 +11,20 @@ gsap.registerPlugin(ScrollTrigger);
 interface iProps extends iChildren {
   className?: string;
   bgUrl: string;
+  yPercent?: number;
+  y?: number;
 }
 
-export default function ParallaxBackground({ children, className, bgUrl }: iProps) {
+export default function ParallaxBackground({
+  children,
+  className,
+  bgUrl,
+  yPercent = 100,
+  y = 0,
+}: iProps) {
   useEffect(() => {
     gsap.to(".parallax-bg", {
-      yPercent: 100,
+      yPercent,
       ease: "none",
       scrollTrigger: {
         trigger: ".parallax-section",
@@ -30,7 +38,7 @@ export default function ParallaxBackground({ children, className, bgUrl }: iProp
       ".content",
       { y: 0 },
       {
-        y: 0,
+        y,
         ease: "none",
         scrollTrigger: {
           trigger: ".parallax-section",

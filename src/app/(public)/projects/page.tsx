@@ -1,13 +1,10 @@
 //
 
-import ToggleCardDemo from "@/components/toggleCardDemo";
-
 export default function ProjectsPage() {
   return (
     <div className="">
-      <h1 className="">This is ProjectsPage component</h1>
+      <h1 className="mb-6">This is ProjectsPage component</h1>
       {/* <RichTextEditor /> */}
-      <ToggleCardDemo />
     </div>
   );
 }

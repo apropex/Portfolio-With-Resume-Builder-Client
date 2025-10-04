@@ -2,3 +2,4 @@
 
 bunx --bun shadcn@latest add button alert-dialog card form tooltip
 
+bunx --bun motion-primitives@latest add morphing-dialog
