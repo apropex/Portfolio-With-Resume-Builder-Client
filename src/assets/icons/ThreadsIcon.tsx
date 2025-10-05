@@ -1,26 +1,40 @@
-import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { HTMLAttributeAnchorTarget } from "react";
+
+interface iProps {
+  href?: string;
+  className?: string;
+  iconClass?: string;
+  width?: string | number;
+  height?: string | number;
+  size?: string | number;
+  text?: string;
+  target?: HTMLAttributeAnchorTarget;
+}
 
 export default function ThreadsIcon({
   href = "#",
   className,
-}: {
-  href?: string;
-  className?: string;
-}) {
+  iconClass,
+  width = "1em",
+  height = "1em",
+  size,
+  text,
+  target,
+}: iProps) {
   return (
     <Link
       href={href}
-      target="_blank"
+      target={target}
       rel="noopener noreferrer"
       aria-label="Threads"
-      className={cn("text-muted-foreground hover:text-primary block", className)}
+      className={className}
     >
       <svg
-        className="size-6"
+        className={iconClass}
         xmlns="http://www.w3.org/2000/svg"
-        width="1em"
-        height="1em"
+        width={size || width}
+        height={size || height}
         viewBox="0 0 24 24"
       >
         <path
@@ -33,6 +47,7 @@ export default function ThreadsIcon({
           color="currentColor"
         />
       </svg>
+      {text && text}
     </Link>
   );
 }

@@ -35,6 +35,8 @@ const links = [
 ];
 
 export default function Footer() {
+  const iconClass = "text-muted-foreground hover:text-primary block size-6";
+
   return (
     <footer className="pt-8 pb-4 md:pt-16 md:pb-8 mt-8 md:mt-16 overflow-hidden backdrop-blur-xs bg-green-500/4 border-t border-green-500/10">
       <div className="mx-auto max-w-5xl px-6">
@@ -55,12 +57,12 @@ export default function Footer() {
           ))}
         </div>
         <div className="my-8 flex flex-wrap justify-center gap-6 text-sm">
-          <XIcon />
-          <LinkedinIcon />
-          <FacebookIcon />
-          <ThreadsIcon />
-          <InstagramIcon />
-          <TiktokIcon />
+          <XIcon iconClass={iconClass} />
+          <LinkedinIcon iconClass={iconClass} target="_blank" />
+          <FacebookIcon iconClass={iconClass} target="_blank" />
+          <ThreadsIcon iconClass={iconClass} target="_blank" />
+          <InstagramIcon iconClass={iconClass} target="_blank" />
+          <TiktokIcon iconClass={iconClass} target="_blank" />
         </div>
         <span className="text-muted-foreground block text-center text-sm">
           © {new Date().getFullYear()} Tailark, All rights reserved

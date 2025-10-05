@@ -1,26 +1,40 @@
-import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { HTMLAttributeAnchorTarget } from "react";
+
+interface iProps {
+  href?: string;
+  className?: string;
+  iconClass?: string;
+  width?: string | number;
+  height?: string | number;
+  size?: string | number;
+  text?: string;
+  target?: HTMLAttributeAnchorTarget;
+}
 
 export default function TiktokIcon({
   href = "#",
   className,
-}: {
-  href?: string;
-  className?: string;
-}) {
+  iconClass,
+  width = "1em",
+  height = "1em",
+  size,
+  text,
+  target,
+}: iProps) {
   return (
     <Link
       href={href}
-      target="_blank"
+      target={target}
       rel="noopener noreferrer"
       aria-label="TikTok"
-      className={cn("text-muted-foreground hover:text-primary block", className)}
+      className={className}
     >
       <svg
-        className="size-6"
+        className={iconClass}
         xmlns="http://www.w3.org/2000/svg"
-        width="1em"
-        height="1em"
+        width={size || width}
+        height={size || height}
         viewBox="0 0 24 24"
       >
         <path
@@ -28,6 +42,7 @@ export default function TiktokIcon({
           d="M16.6 5.82s.51.5 0 0A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6c0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64c0 3.33 2.76 5.7 5.69 5.7c3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48"
         ></path>
       </svg>
+      {text && text}
     </Link>
   );
 }

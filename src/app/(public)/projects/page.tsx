@@ -1,6 +1,7 @@
 //
 
 import { ProductCard } from "@/components/project-card";
+import { projectContent } from "./project-content";
 
 export default function ProjectsPage() {
   return (
@@ -8,21 +9,25 @@ export default function ProjectsPage() {
       <h1 className="mb-6">This is ProjectsPage component</h1>
       {/* <RichTextEditor /> */}
 
-      <ProductCard
-        name="Nike Air Force"
-        price={129.99}
-        originalPrice={169.99}
-        rating={4.7}
-        reviewCount={325}
-        freeShipping
-        colors={["#1e293b", "#f43f5e", "#0ea5e9", "#10b981"]}
-        sizes={["38", "39", "40", "41", "42", "43"]}
-        images={[
-          "https://images.unsplash.com/photo-1543508282-6319a3e2621f?q=80&w=1315&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-          "https://images.unsplash.com/photo-1656230259229-aa2634e3352c?q=80&w=1350&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-          "https://images.unsplash.com/photo-1579338559194-a162d19bf842?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        ]}
-      />
+      <div className="flex items-start justify-center gap-5">
+        {projectContent.map((content, i) => (
+          <ProductCard
+            key={i}
+            id={content.id}
+            title={content.title}
+            description={content.description}
+            images={content.images}
+            rating={content.rating}
+            reviewCount={content.reviewCount}
+            isPremium={content.isPremium}
+            discountPrice={content.discountPrice}
+            originalPrice={content.originalPrice}
+            technologies={content.technologies}
+            liveLink={content.liveLink}
+            githubLinks={content.githubLinks}
+          />
+        ))}
+      </div>
     </div>
   );
 }

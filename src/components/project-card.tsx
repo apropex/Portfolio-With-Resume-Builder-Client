@@ -1,47 +1,50 @@
 "use client";
 
+import GithubIcon from "@/assets/icons/GithubIcon";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import { iProjectCard } from "@/types/project.types";
+import { isGithubLinksObject } from "@/utils/isObject";
+import { joinString } from "@/utils/joinString";
 import { motion } from "framer-motion";
-import { useState } from "react";
-
-import { ChevronLeft, ChevronRight, Heart, Star } from "lucide-react";
+import { ChevronLeft, ChevronRight, Heart, Link2Icon, Star } from "lucide-react";
 import Link from "next/link";
-
-export interface ProductCardProps {
-  name?: string;
-  price?: number;
-  originalPrice?: number;
-  rating?: number;
-  reviewCount?: number;
-  images?: string[];
-  colors?: string[];
-  sizes?: string[];
-  freeShipping?: boolean;
-}
+import { useEffect, useState } from "react";
 
 export function ProductCard({
-  name = "Premium Wool Sweater",
-  price = 89.99,
-  originalPrice = 129.99,
-  rating = 4.8,
-  reviewCount = 142,
-  images = ["/logo.svg", "/logo.svg", "/logo.svg"],
-  colors = ["#1e293b", "#a855f7", "#0ea5e9", "#84cc16"],
-  sizes = ["XS", "S", "M", "L", "XL"],
-  freeShipping = true,
-}: ProductCardProps) {
+  id,
+  title,
+  description,
+  images,
+  rating,
+  reviewCount,
+  isPremium,
+  discountPrice = 0,
+  originalPrice = 0,
+  technologies,
+  liveLink,
+  githubLinks,
+}: iProjectCard) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [selectedColor, setSelectedColor] = useState(colors[0]);
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
-  const [isWishlisted, setIsWishlisted] = useState(false);
+  const [isWishListed, setIsWishListed] = useState(false);
+  const [allTechs, setAllTechs] = useState<string[]>([]);
+
+  useEffect(() => {
+    setAllTechs([]);
+    technologies?.forEach(({ technologies }) =>
+      technologies?.forEach((tech) => setAllTechs((prev) => [...prev, tech]))
+    );
+  }, [technologies]);
 
   const nextImage = (e: React.MouseEvent) => {
+    if (!images) return;
     e.stopPropagation();
     setCurrentImageIndex((prev) => (prev + 1) % images.length);
   };
 
   const prevImage = (e: React.MouseEvent) => {
+    if (!images) return;
     e.stopPropagation();
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
   };
@@ -52,8 +55,8 @@ export function ProductCard({
       <div className="relative aspect-[3/4] overflow-hidden ">
         <motion.img
           key={currentImageIndex}
-          src={images[currentImageIndex]}
-          alt={`${name} - View ${currentImageIndex + 1}`}
+          src={images?.[currentImageIndex]}
+          alt={`${title} - View ${currentImageIndex + 1}`}
           className="object-cover w-full h-full"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -82,7 +85,7 @@ export function ProductCard({
 
         {/* Image indicators */}
         <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5">
-          {images.map((_, index) => (
+          {images?.map((_, index) => (
             <button
               key={index}
               className={`w-1.5 h-1.5 rounded-full transition-all ${
@@ -101,14 +104,14 @@ export function ProductCard({
           variant="secondary"
           size="icon"
           className={`absolute top-3 right-3 h-8 w-8 rounded-full text-black/80 dark:text-white bg-background/80 backdrop-blur-sm shadow-sm ${
-            isWishlisted ? "text-rose-500" : ""
+            isWishListed ? "text-rose-500" : ""
           }`}
           onClick={(e) => {
             e.stopPropagation();
-            setIsWishlisted(!isWishlisted);
+            setIsWishListed(!isWishListed);
           }}
         >
-          <Heart className={`h-4 w-4 ${isWishlisted ? "fill-rose-500" : ""}`} />
+          <Heart className={`h-4 w-4 ${isWishListed ? "fill-rose-500" : ""}`} />
         </Button>
       </div>
 
@@ -116,7 +119,7 @@ export function ProductCard({
       <CardContent className="p-4">
         <div className="space-y-3">
           <div>
-            <h3 className="font-medium line-clamp-1">{name}</h3>
+            <h3 className="font-medium line-clamp-1">{title}</h3>
             <div className="flex items-center gap-2 mt-1">
               <div className="flex items-center">
                 <Star className="h-3.5 w-3.5 fill-amber-500 text-amber-500" />
@@ -125,70 +128,81 @@ export function ProductCard({
               <span className="text-xs text-muted-foreground">
                 ({reviewCount} reviews)
               </span>
-              {freeShipping && (
-                <span className="text-xs text-emerald-600 ml-auto">Free to Use</span>
-              )}
+
+              <span
+                className={cn("text-xs text-emerald-600 ml-auto", {
+                  "text-[#ffa600]": isPremium,
+                })}
+              >
+                {isPremium ? "Premium Code" : "Free Code"}
+              </span>
             </div>
           </div>
 
           {/* Price */}
-          <div className="flex items-baseline gap-2">
-            <span className="text-lg font-semibold">${price.toFixed(2)}</span>
-            {originalPrice > price && (
-              <span className="text-sm text-muted-foreground line-through">
-                ${originalPrice.toFixed(2)}
+          {isPremium && (
+            <div className="flex items-baseline gap-2">
+              {discountPrice > 0 && (
+                <span className="text-lg font-semibold">${discountPrice.toFixed(2)}</span>
+              )}
+              {originalPrice > 0 && originalPrice > discountPrice && (
+                <span className="text-sm text-muted-foreground line-through">
+                  ${originalPrice.toFixed(2)}
+                </span>
+              )}
+            </div>
+          )}
+        </div>
+
+        <div className="mt-2">
+          <p className="line-clamp-3 text-muted-foreground">{description}</p>
+
+          <div className="flex flex-wrap gap-2 mt-3">
+            {allTechs?.map((tech, i) => (
+              <span
+                key={i}
+                className="bg-accent block py-1 px-2 text-sm rounded border dark:border-gray-900 flex-1 whitespace-nowrap text-center cursor-default"
+              >
+                {tech}
               </span>
-            )}
-          </div>
-
-          {/* Colors & Sizes */}
-          <div className="space-y-3">
-            <div className="space-y-1.5">
-              <div className="text-xs text-muted-foreground">Colors</div>
-              <div className="flex gap-2">
-                {colors.map((color) => (
-                  <button
-                    key={color}
-                    className={`w-6 h-6 rounded-full transition-all ${
-                      selectedColor === color
-                        ? "ring-2 ring-primary ring-offset-2"
-                        : "ring-1 ring-muted hover:ring-primary"
-                    }`}
-                    style={{ backgroundColor: color }}
-                    onClick={() => setSelectedColor(color)}
-                    aria-label={`Select color ${color}`}
-                  />
-                ))}
-              </div>
-            </div>
-
-            <div className="space-y-1.5">
-              <div className="text-xs text-muted-foreground">Sizes</div>
-              <div className="flex flex-wrap gap-2">
-                {sizes.map((size) => (
-                  <button
-                    key={size}
-                    className={`min-w-[2.5rem] h-8 px-2 rounded-md text-xs font-medium transition-all ${
-                      selectedSize === size
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-muted/60 hover:bg-muted"
-                    }`}
-                    onClick={() => setSelectedSize(size)}
-                  >
-                    {size}
-                  </button>
-                ))}
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </CardContent>
 
       {/* Footer */}
       <CardFooter className="p-4 pt-0">
-        <Button className="w-full">
-          <Link href={"#"}>View Details</Link>
-        </Button>
+        <div className="flex flex-wrap gap-2">
+          <Button asChild size={"sm"} className="w-full">
+            <Link href={joinString("/projects/", id)}>
+              <Link2Icon /> View Details
+            </Link>
+          </Button>
+          <Button asChild size={"sm"} variant={"outline"} className="flex-1">
+            <Link href={liveLink}>
+              <Link2Icon /> Live View
+            </Link>
+          </Button>
+
+          {isGithubLinksObject(githubLinks) ? (
+            <>
+              {githubLinks!.clientRepo && (
+                <Button asChild size={"sm"} variant={"outline"} className="flex-1">
+                  <GithubIcon href={githubLinks.clientRepo} text="Frontend" />
+                </Button>
+              )}
+              {githubLinks!.serverRepo && (
+                <Button asChild size={"sm"} variant={"outline"} className="flex-1">
+                  <GithubIcon href={githubLinks.serverRepo} text="Backend" />
+                </Button>
+              )}
+            </>
+          ) : (
+            <Button asChild size={"sm"} variant={"outline"} className="flex-1">
+              <GithubIcon href={githubLinks} text="GitHub Repo" />
+            </Button>
+          )}
+        </div>
       </CardFooter>
     </Card>
   );
