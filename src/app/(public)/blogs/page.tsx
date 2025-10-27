@@ -12,9 +12,8 @@ export default async function BlogsPage() {
   });
 
   return (
-    <div className="">
-      <h1 className="">This is BlogsPage component</h1>
-
+    <div>
+      <h1 className="text-center text-xl md:text-2xl font-bold mt-10">Personal Blogs</h1>
       <div
         className={cn(
           "grid grid-cols-1 md:grid-cols-3 gap-4",

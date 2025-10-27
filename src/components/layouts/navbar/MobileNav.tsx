@@ -18,7 +18,7 @@ export default function MobileNav() {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button className="group size-8 md:hidden" variant="ghost" size="icon">
+        <Button className="group size-8 lg:hidden" variant="ghost" size="icon">
           <MenubarIcon />
         </Button>
       </PopoverTrigger>
