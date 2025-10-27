@@ -44,7 +44,7 @@
     "gsap": "^3.13.0",
     "imagekit": "^6.0.0",
     "lowlight": "^3.3.0",
-    "lucide-react": "^0.544.0",
+    "lucide-react": "^0.548.0",
     "motion": "^12.23.22",
     "next": "15.5.4",
     "next-auth": "^4.24.11",

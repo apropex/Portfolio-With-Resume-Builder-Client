@@ -33,6 +33,10 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+
+  async redirects() {
+    return [{ source: "/dashboard", destination: "/dashboard/blogs", permanent: true }];
+  },
 };
 
 export default nextConfig;
