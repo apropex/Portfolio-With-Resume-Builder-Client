@@ -1,4 +1,4 @@
-import { iParams } from "@/types";
+import { iParams, iResponse } from "@/types";
 import { iBlog } from "@/types/blog";
 import { _fetch } from "@/utils/_fetch";
 import apiLink from "@/utils/apiLink";
@@ -9,7 +9,7 @@ import Image from "next/image";
 
 export async function generateMetadata({ params }: iParams) {
   const id = (await params).id;
-  const blog = await _fetch<iBlog>(apiLink("/blog/", id));
+  const { data: blog } = await _fetch<iResponse<iBlog>>(apiLink("/blog/", id));
 
   return {
     title: joinString(blog?.title ?? "Blog detail page", " | Portfolio Pro"),
@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: iParams) {
 
 export default async function BlogDetails({ params }: iParams) {
   const id = (await params).id;
-  const blog = await _fetch<iBlog>(apiLink("/blog/", id));
+  const { data: blog } = await _fetch<iResponse<iBlog>>(apiLink("/blog/", id));
 
   if (!blog) return null;
 

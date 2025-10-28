@@ -3,7 +3,7 @@
 export async function _fetch<TResponse = unknown, TRequest = unknown>(
   api: string,
   options: RequestInit = {},
-  body?: TRequest,
+  body?: TRequest
 ): Promise<TResponse> {
   if (!options.method) options.method = "GET";
   if (!options.headers) {
@@ -15,17 +15,16 @@ export async function _fetch<TResponse = unknown, TRequest = unknown>(
     options.body = JSON.stringify(body);
   }
 
-  const res = await fetch(api, options);
-
-  if (!res.ok) {
-    const errorText = await res.text();
-    throw new Error(`HTTP error! Status: ${res.status}, Message: ${errorText}`);
-  }
-
-  // Try parsing JSON safely
   try {
+    const res = await fetch(api, options);
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(`HTTP error! Status: ${res.status}, Message: ${errorText}`);
+    }
+
     return (await res.json()) as TResponse;
-  } catch {
-    throw new Error("Failed to parse JSON response.");
+  } catch (error) {
+    throw error;
   }
 }

@@ -57,7 +57,7 @@ export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sid
 
   return (
     <Sidebar {...props} variant="floating" collapsible="icon">
-      <SidebarHeader>
+      <SidebarHeader className="bg-background rounded-t-3xl">
         <SidebarMenuItem>
           <SidebarMenuButton asChild>
             <Link href={"/"}>
@@ -68,7 +68,7 @@ export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sid
         </SidebarMenuItem>
         <Separator />
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="bg-background rounded-b-3xl">
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>

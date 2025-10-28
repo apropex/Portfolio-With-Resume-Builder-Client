@@ -36,8 +36,3 @@ export interface Author {
   createdAt: string;
   updatedAt: string;
 }
-
-export interface iBlogResponse {
-  data: iBlog[];
-  pagination: iPagination;
-}

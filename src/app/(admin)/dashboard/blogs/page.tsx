@@ -10,18 +10,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { iBlogResponse } from "@/types/blog";
+import { iResponse } from "@/types";
+import { iBlog } from "@/types/blog";
 import { _fetch } from "@/utils/_fetch";
 import apiLink from "@/utils/apiLink";
 import { format } from "date-fns";
 import { CheckIcon, EditIcon, XIcon } from "lucide-react";
 
 export default async function DashboardBlog() {
-  const { data: blogs, pagination } = await _fetch<iBlogResponse>(apiLink("/blog"), {
+  const { data: blogs } = await _fetch<iResponse<iBlog[]>>(apiLink("/blog"), {
     cache: "no-store",
   });
-
-  console.log(blogs[0]);
 
   return (
     <div className="">

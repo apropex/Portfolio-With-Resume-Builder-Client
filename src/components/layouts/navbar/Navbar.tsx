@@ -19,7 +19,12 @@ export const navigationLinks = [
 export default function Navbar({ className }: { className?: string }) {
   return (
     <>
-      <div className="fixed left-0 top-0 w-full h-full max-h-[5rem] pt-2.5 z-50">
+      <div
+        className={cn(
+          "hidden lg:block w-full h-full max-w-[37rem] mx-auto max-h-[5rem] pt-2.5",
+          "fixed top-0 left-1/2 -translate-x-1/2 z-[888]"
+        )}
+      >
         <div
           className={cn(
             "border border-green-500/20 bg-background overflow-hidden rounded-4xl",
@@ -27,11 +32,13 @@ export default function Navbar({ className }: { className?: string }) {
             "w-full max-w-xl mx-auto flex items-center justify-center"
           )}
         >
-          <div className="hidden lg:block w-full bg-green-500/5 py-1.5 px-2">
+          <div className="w-full bg-green-500/5 py-1.5 px-2">
             <NavLinks />
           </div>
         </div>
       </div>
+
+      {/*  */}
       <header className={className}>
         <div className="flex h-16 items-center justify-between gap-4">
           {/* Left side */}

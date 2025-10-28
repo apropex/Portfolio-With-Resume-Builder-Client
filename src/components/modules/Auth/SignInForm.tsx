@@ -47,7 +47,7 @@ export default function SignInForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
-      password: "",
+      password: "/Zx32165",
     },
   });
 

@@ -8,7 +8,6 @@ import { z } from "zod";
 
 import { register } from "@/actions/auth";
 import AvatarUpload from "@/components/avatar-upload";
-import { fileUploader } from "@/components/ImagekitUpload";
 import {
   Form,
   FormControl,
@@ -21,7 +20,6 @@ import {
 import { Input } from "@/components/ui/input";
 import LoadingSpinner from "@/components/ui/loadingSpinner";
 import { iNotification, Notifications } from "@/components/ui/notifications";
-import { deleteFile } from "@/helpers/deleteFile";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
@@ -72,15 +70,11 @@ export default function SignUpForm() {
   async function onSubmit({ fullName, email, password }: FormValues) {
     setLoading(true);
 
-    let imageData;
-    if (file) imageData = await fileUploader(file);
-
     const data: {
       name: string;
       email: string;
       password: string;
       provider: "credentials";
-      image?: string;
     } = {
       name: fullName,
       email,
@@ -88,36 +82,34 @@ export default function SignUpForm() {
       provider: "credentials",
     };
 
-    if (imageData?.url) data.image = imageData?.url;
+    const formData = new FormData();
+
+    if (file) formData.append("file", file);
+    formData.append("data", JSON.stringify(data));
 
     try {
       const newUser = await register(data);
 
-      if ((!newUser || !newUser.email || !newUser.isNew) && imageData?.fileId) {
-        await deleteFile(imageData?.fileId);
-      }
-
-      if (newUser && newUser.email) {
+      if (newUser.success) {
         toastRef.current?.createNotification(
           "success",
           `Successfully register ${newUser.name}`,
-          "Would you like an adventure now, or would you like to have your tea first?",
+          "Would you like an adventure now, or would you like to have your tea first?"
         );
-        if (newUser.provider === "credentials") router.push("/signin");
+        if (newUser?.data.provider === "credentials") router.push("/signin");
         else router.push("/");
       } else
         toastRef.current?.createNotification(
           "error",
           "Failed to register user",
-          "We are sorry for unnecaccery problem, try again later or contact to admin",
+          "We are sorry for unnecaccery problem, try again later or contact to admin"
         );
     } catch (error) {
       console.log({ error });
-      if (imageData?.fileId) await deleteFile(imageData?.fileId);
       toastRef.current?.createNotification(
         "error",
         `Failed to register user`,
-        "We are sorry for unnecaccery problem, try again later or contact to admin",
+        "We are sorry for unnecaccery problem, try again later or contact to admin"
       );
     } finally {
       setLoading(false);
